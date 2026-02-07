@@ -48,14 +48,16 @@ public class AccountTest {
 @Test
     void createAccount ()  {
     Account account = new Account();
+    AccountDTO accountDTO = new AccountDTO();
+    when(mapperAccount.toAccount(accountDTO)).thenReturn(account);
     when(repositoryAccount.save(account)).thenReturn(account);
 
-    AccountDTO accountDTO = new AccountDTO();
+    AccountDTO accountDTO2 = new AccountDTO();
 
-    when(mapperAccount.toAccountDTO(account)).thenReturn(accountDTO);
+    when(mapperAccount.toAccountDTO(account)).thenReturn(accountDTO2);
 
-    AccountDTO accountDTO1 = bankService.createAccount(account);
-    assertEquals(accountDTO1,accountDTO);
+    AccountDTO accountDTO1 = bankService.createAccount(accountDTO);
+    assertEquals(accountDTO1,accountDTO2);
     log.info("Объекты равны");
 
     verify(repositoryAccount, times(1)).save(account);

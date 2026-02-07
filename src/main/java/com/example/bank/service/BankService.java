@@ -35,9 +35,10 @@ public class BankService implements BankServiceInt{
         this.mapperCard = mapperCard;
     }
 
-    public AccountDTO createAccount (Account account) {
-        account.setNumber(account.randomCVV(16));
-        var saved = repositoryAccount.save(account);
+    public AccountDTO createAccount (AccountDTO account) {
+        Account account1 = mapperAccount.toAccount(account);
+        account1.setNumber(account1.randomCVV(16));
+        var saved = repositoryAccount.save(account1);
         return mapperAccount.toAccountDTO(saved);
     }
 

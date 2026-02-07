@@ -25,7 +25,7 @@ public class Controller {
     }
 
     @PostMapping("/createaccount")
-    public AccountDTO createAccount (@RequestBody Account account) {
+    public AccountDTO createAccount (@RequestBody AccountDTO account) {
         log.info("Создание счета");
         return service.createAccount(account);
     }

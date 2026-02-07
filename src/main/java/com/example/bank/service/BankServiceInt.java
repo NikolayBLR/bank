@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BankServiceInt {
-    AccountDTO createAccount(Account accountDTO);
+    AccountDTO createAccount(AccountDTO accountDTO);
     CardDTO createCard(CardDTO cardDTO);
     AccountDTO getbalance (UUID id);
     AccountDTO replenishmentAccount (String number, Long count);
