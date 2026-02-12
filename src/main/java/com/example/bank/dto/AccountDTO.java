@@ -1,9 +1,13 @@
 package com.example.bank.dto;
 
+import jakarta.validation.constraints.Null;
+
 import java.util.UUID;
 
 public class AccountDTO {
+    @Null
     private UUID id;
+    @Null
     private String number;
     private String name;
     private Long balance;

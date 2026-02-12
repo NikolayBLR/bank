@@ -14,7 +14,7 @@ import java.util.UUID;
 public abstract class MapperCard {
     @Autowired
      RepositoryAccount accountRepository;
-    @Mapping(source = "account", target = "account")
+
     public abstract Card toCard(CardDTO cardDTO);
 
     public abstract CardDTO toCardDTO(Card card);

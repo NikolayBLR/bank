@@ -16,7 +16,6 @@ public class Account {
     private UUID id;
     private String name;
     private String number;
-    @NotNull
     @Min(0)
     private Long balance;
 

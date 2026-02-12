@@ -1,9 +1,15 @@
 package com.example.bank.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class AccountTranslationDTO {
+    @NotNull
     String number1;
+    @NotNull
     String number2;
+    @NotNull
     Long count;
+
 
     public AccountTranslationDTO(String number1, String number2, Long count) {
         this.number1 = number1;

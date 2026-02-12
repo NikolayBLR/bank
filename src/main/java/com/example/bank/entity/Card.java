@@ -10,7 +10,6 @@ import java.util.UUID;
 @Entity
 public class Card {
     @Id
-    @GeneratedValue(generator = "UUID")
     private UUID id;
     private String number;
     @Column(name = "validity")

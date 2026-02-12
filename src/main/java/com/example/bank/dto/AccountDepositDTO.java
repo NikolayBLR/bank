@@ -1,7 +1,11 @@
 package com.example.bank.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class AccountDepositDTO {
+    @NotNull
     String number;
+    @NotNull
     Long count;
 
     public AccountDepositDTO(String number, Long count) {

@@ -1,14 +1,18 @@
 package com.example.bank.service;
 
 
+import com.example.bank.ConnectionServices;
 import com.example.bank.dto.AccountDTO;
 import com.example.bank.dto.CardDTO;
+import com.example.bank.dto.ContractDTO;
+import com.example.bank.dto.UserDto;
 import com.example.bank.entity.Account;
 import com.example.bank.entity.Card;
 import com.example.bank.mapper.MapperAccount;
 import com.example.bank.mapper.MapperCard;
 import com.example.bank.repository.RepositoryAccount;
 import com.example.bank.repository.RepositoryCard;
+import feign.Contract;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,18 +25,20 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class BankService implements BankServiceInt{
+public class BankService implements BankServiceInt {
 
     public final MapperAccount mapperAccount;
     public final RepositoryAccount repositoryAccount;
     public final RepositoryCard repositoryCard;
     public final MapperCard mapperCard;
+    public final ConnectionServices connectionServices;
 
-    public BankService(MapperAccount mapperAccount, RepositoryAccount repositoryAccount, RepositoryCard repositoryCard, MapperCard mapperCard) {
+    public BankService(MapperAccount mapperAccount, RepositoryAccount repositoryAccount, RepositoryCard repositoryCard, MapperCard mapperCard, ConnectionServices connectionServices) {
         this.mapperAccount = mapperAccount;
         this.repositoryAccount = repositoryAccount;
         this.repositoryCard = repositoryCard;
         this.mapperCard = mapperCard;
+        this.connectionServices = connectionServices;
     }
 
     public AccountDTO createAccount (AccountDTO account) {
@@ -45,8 +51,8 @@ public class BankService implements BankServiceInt{
     public CardDTO createCard (CardDTO card) {
         Card card1 = mapperCard.toCard(card);
 
-        LocalDate date = LocalDate.parse("2030-01-01");
-        card1.setId(card.getId());
+        LocalDate date = LocalDate.now();
+        card1.setId(UUID.randomUUID());
         card1.setNumber(card1.randomCVV(16));
         card1.setCvv(card1.randomCVV(3));
         card1.setValidity(date);
@@ -74,10 +80,13 @@ public class BankService implements BankServiceInt{
         Card card1 = repositoryCard.findBynumber(number1).orElseThrow(() -> new EntityNotFoundException("Not found"));
         Account account = card.getAccount();
         Account account1 = card1.getAccount();
-        account.setBalance(account.getBalance()-count);
+        if (count >= 0) { account.setBalance(account.getBalance()-count); }
+        else account.setBalance(account.getBalance()+count);
         var saved = repositoryAccount.save(account);
         var a = mapperAccount.toAccountDTO(saved);
+        if (count >= 0)
         account1.setBalance(account1.getBalance()+count);
+        else account1.setBalance(account1.getBalance()-count);
         var saved1 = repositoryAccount.save(account1);
         var b = mapperAccount.toAccountDTO(saved1);
         List<AccountDTO> accountDTOS= new ArrayList<>();
@@ -87,5 +96,14 @@ public class BankService implements BankServiceInt{
 
 
 
+    }
+
+    public ContractDTO getContract (UUID id) {
+        return connectionServices.getContract(id);
+    }
+
+    @Override
+    public UserDto getUser(UUID id) {
+        return connectionServices.getUser(id);
     }
 }

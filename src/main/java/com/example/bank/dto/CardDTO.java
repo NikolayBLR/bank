@@ -3,13 +3,17 @@ package com.example.bank.dto;
 import com.example.bank.entity.Account;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Null;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 public class CardDTO {
+    @Null
     private UUID id;
+    @Null
     private LocalDate validity;
+    @Null
     private String cvv;
     private UUID account;
 

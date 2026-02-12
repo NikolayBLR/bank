@@ -1,14 +1,13 @@
 package com.example.bank.controller;
 
 
-import com.example.bank.dto.AccountDTO;
-import com.example.bank.dto.AccountDepositDTO;
-import com.example.bank.dto.AccountTranslationDTO;
-import com.example.bank.dto.CardDTO;
+import com.example.bank.dto.*;
 import com.example.bank.entity.Account;
 import com.example.bank.service.BankServiceInt;
+import feign.Contract;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +24,13 @@ public class Controller {
     }
 
     @PostMapping("/createaccount")
-    public AccountDTO createAccount (@RequestBody AccountDTO account) {
+    public AccountDTO createAccount (@RequestBody @Validated AccountDTO account) {
         log.info("Создание счета");
         return service.createAccount(account);
     }
 
     @PostMapping("/cards")
-    public ResponseEntity<CardDTO> createCard(@RequestBody CardDTO dto) {
+    public ResponseEntity<CardDTO> createCard(@RequestBody @Validated CardDTO dto) {
         log.info("Создание карты");
         CardDTO saved = service.createCard(dto);
         return ResponseEntity.ok(saved); }
@@ -44,15 +43,27 @@ public class Controller {
     }
     @PostMapping("/account/deposit")
 
-    public AccountDTO replenishmentAccount (@RequestBody AccountDepositDTO accountDepositDTO) {
+    public AccountDTO replenishmentAccount (@RequestBody @Validated AccountDepositDTO accountDepositDTO) {
         log.info("Пополнение счета");
         return service.replenishmentAccount(accountDepositDTO.getNumber(),accountDepositDTO.getCount());
     }
     @PostMapping("/account/translation")
 
-    public List<AccountDTO> translation(@RequestBody AccountTranslationDTO accountTranslationDTO) {
+    public List<AccountDTO> translation(@RequestBody @Validated AccountTranslationDTO accountTranslationDTO) {
         log.info("Перечисление с одной карты на другую ");
         return  service.translation(accountTranslationDTO.getNumber1(), accountTranslationDTO.getNumber2(), accountTranslationDTO.getCount());
+    }
+
+    @GetMapping("/contract/{id}")
+
+    public ContractDTO getContract (@PathVariable UUID id) {
+        return service.getContract(id);
+    }
+
+    @GetMapping("/user/{id}")
+
+    public UserDto getUser (@PathVariable UUID id) {
+        return service.getUser(id);
     }
 
 }
