@@ -6,13 +6,13 @@ import jakarta.validation.constraints.Null;
 import java.util.UUID;
 
 public class ContractDTO {
-
+        @Null
         private UUID id;
-
+        @NotNull
         private UUID user;
-
+        @NotNull
         private String number;
-
+        @NotNull
         private Status status;
 
 

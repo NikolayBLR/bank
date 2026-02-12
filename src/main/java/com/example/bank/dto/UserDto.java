@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class UserDto {
-
+        @Null
         private UUID id;
-
+        @NotNull
         private String surname;
-
+        @NotNull
         private String name;
-
+        @Null
         private LocalDate date;
 
         public UserDto(UUID id, String surname, String name, LocalDate date) {

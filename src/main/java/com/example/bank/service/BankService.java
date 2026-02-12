@@ -1,18 +1,14 @@
 package com.example.bank.service;
 
 
-import com.example.bank.ConnectionServices;
 import com.example.bank.dto.AccountDTO;
 import com.example.bank.dto.CardDTO;
-import com.example.bank.dto.ContractDTO;
-import com.example.bank.dto.UserDto;
 import com.example.bank.entity.Account;
 import com.example.bank.entity.Card;
 import com.example.bank.mapper.MapperAccount;
 import com.example.bank.mapper.MapperCard;
 import com.example.bank.repository.RepositoryAccount;
 import com.example.bank.repository.RepositoryCard;
-import feign.Contract;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -94,16 +90,6 @@ public class BankService implements BankServiceInt {
         accountDTOS.add(b);
         return accountDTOS;
 
-
-
     }
 
-    public ContractDTO getContract (UUID id) {
-        return connectionServices.getContract(id);
-    }
-
-    @Override
-    public UserDto getUser(UUID id) {
-        return connectionServices.getUser(id);
-    }
 }

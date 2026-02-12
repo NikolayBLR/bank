@@ -1,14 +1,12 @@
-package com.example.bank;
+package com.example.bank.service;
 
 
 
 import com.example.bank.dto.ContractDTO;
 import com.example.bank.dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @FeignClient(name = "ContractsService", url = "http://localhost:8083")

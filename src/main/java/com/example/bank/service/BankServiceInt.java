@@ -16,6 +16,4 @@ public interface BankServiceInt {
     AccountDTO getbalance (UUID id);
     AccountDTO replenishmentAccount (String number, Long count);
     List<AccountDTO> translation (String number, String number1, Long count);
-    public ContractDTO getContract (UUID id);
-    public UserDto getUser (UUID id);
 }

@@ -1,10 +1,8 @@
-package com.example.bank.controller;
+package com.example.bank.controllers;
 
 
 import com.example.bank.dto.*;
-import com.example.bank.entity.Account;
 import com.example.bank.service.BankServiceInt;
-import feign.Contract;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -52,18 +50,6 @@ public class Controller {
     public List<AccountDTO> translation(@RequestBody @Validated AccountTranslationDTO accountTranslationDTO) {
         log.info("Перечисление с одной карты на другую ");
         return  service.translation(accountTranslationDTO.getNumber1(), accountTranslationDTO.getNumber2(), accountTranslationDTO.getCount());
-    }
-
-    @GetMapping("/contract/{id}")
-
-    public ContractDTO getContract (@PathVariable UUID id) {
-        return service.getContract(id);
-    }
-
-    @GetMapping("/user/{id}")
-
-    public UserDto getUser (@PathVariable UUID id) {
-        return service.getUser(id);
     }
 
 }
